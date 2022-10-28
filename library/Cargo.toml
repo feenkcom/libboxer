@@ -1,0 +1,16 @@
+[package]
+name = "libboxer"
+version = "0.1.0"
+authors = ["feenk gmbh <contact@feenk.com>"]
+edition = "2021"
+
+[lib]
+name = "Boxer"
+crate-type = ["cdylib"]
+
+[dependencies]
+array-box = "1.0"
+geometry-box = "1.0"
+string-box = "1.1"
+value-box = "1.0"
+crossbeam = "0.8"

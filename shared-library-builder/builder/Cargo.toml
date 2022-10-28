@@ -1,0 +1,12 @@
+[package]
+name = "libboxer-builder"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "builder"
+path = "src/main.rs"
+
+[dependencies]
+shared-library-builder = { git = "https://github.com/feenkcom/shared-library-builder-rs" }
+libboxer-library = { path = "../library" }
