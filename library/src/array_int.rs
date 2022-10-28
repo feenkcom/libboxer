@@ -1,5 +1,6 @@
+use core::ffi::c_int;
+
 use array_box::ArrayBox;
-use std::ffi::c_int;
 use value_box::ValueBox;
 
 use crate::array::ArrayBoxFFI;
