@@ -482,6 +482,8 @@ dependencies = [
 [[package]]
 name = "string-box"
 version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0a04b3169fc5a67f1a88ddbb0bf6cf31cfb087392f346fa0ace2d012dda73821"
 dependencies = [
  "widestring",
 ]

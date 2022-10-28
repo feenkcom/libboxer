@@ -17,6 +17,3 @@ overflow-checks = true
 
 [profile.release]
 opt-level = 3
-
-[patch.crates-io]
-string-box = { path = "../value-box-rs/string-box" }
