@@ -8,12 +8,12 @@ pub type BoxerPointF32 = PointBox<f32>;
 pub type BoxerArrayPointF32 = ArrayBox<BoxerPointF32>;
 
 #[no_mangle]
-pub fn boxer_array_point_f32_create() -> *mut ValueBox<BoxerArrayPointF32> {
+pub extern fn boxer_array_point_f32_create() -> *mut ValueBox<BoxerArrayPointF32> {
     BoxerArrayPointF32::boxer_array_create()
 }
 
 #[no_mangle]
-pub fn boxer_array_point_f32_create_with(
+pub extern fn boxer_array_point_f32_create_with(
     element_ptr: *mut ValueBox<BoxerPointF32>,
     amount: usize,
 ) -> *mut ValueBox<BoxerArrayPointF32> {
@@ -23,7 +23,7 @@ pub fn boxer_array_point_f32_create_with(
 }
 
 #[no_mangle]
-pub fn boxer_array_point_f32_create_from_data(
+pub extern fn boxer_array_point_f32_create_from_data(
     _data: *mut BoxerPointF32,
     amount: usize,
 ) -> *mut ValueBox<BoxerArrayPointF32> {
@@ -31,22 +31,22 @@ pub fn boxer_array_point_f32_create_from_data(
 }
 
 #[no_mangle]
-pub fn boxer_array_point_f32_drop(ptr: *mut ValueBox<BoxerArrayPointF32>) {
+pub extern fn boxer_array_point_f32_drop(ptr: *mut ValueBox<BoxerArrayPointF32>) {
     BoxerArrayPointF32::boxer_array_drop(ptr);
 }
 
 #[no_mangle]
-pub fn boxer_array_point_f32_get_length(ptr: *mut ValueBox<BoxerArrayPointF32>) -> usize {
+pub extern fn boxer_array_point_f32_get_length(ptr: *mut ValueBox<BoxerArrayPointF32>) -> usize {
     BoxerArrayPointF32::boxer_array_get_length(ptr)
 }
 
 #[no_mangle]
-pub fn boxer_array_point_f32_get_capacity(ptr: *mut ValueBox<BoxerArrayPointF32>) -> usize {
+pub extern fn boxer_array_point_f32_get_capacity(ptr: *mut ValueBox<BoxerArrayPointF32>) -> usize {
     BoxerArrayPointF32::boxer_array_get_capacity(ptr)
 }
 
 #[no_mangle]
-pub fn boxer_array_point_f32_get_data(
+pub extern fn boxer_array_point_f32_get_data(
     ptr: *mut ValueBox<BoxerArrayPointF32>,
 ) -> *mut BoxerPointF32 {
     BoxerArrayPointF32::boxer_array_get_data(ptr)

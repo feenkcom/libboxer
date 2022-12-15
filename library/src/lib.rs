@@ -27,6 +27,6 @@ pub mod size_u64;
 pub mod string;
 
 #[no_mangle]
-pub fn boxer_test() -> bool {
+pub extern fn boxer_test() -> bool {
     return true;
 }
