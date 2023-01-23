@@ -1,9 +1,10 @@
 use array_box::ArrayBox;
-use value_box::{ValueBox, ValueBoxPointer};
+use std::any::Any;
+use value_box::{ReturnBoxerResult, ValueBox, ValueBoxPointer};
 
 pub trait ArrayBoxFFI<T>
 where
-    T: Default + Copy,
+    T: Default + Copy + Any,
 {
     fn boxer_array_byte_size(count: usize) -> usize;
     fn boxer_array_create() -> *mut ValueBox<ArrayBox<T>>;
@@ -41,7 +42,7 @@ where
 
 impl<T> ArrayBoxFFI<T> for ArrayBox<T>
 where
-    T: Default + Copy,
+    T: Default + Copy + Any,
 {
     fn boxer_array_byte_size(count: usize) -> usize {
         std::mem::size_of::<T>() * count
@@ -93,29 +94,35 @@ where
         })
     }
 
-    fn boxer_array_get_length(_maybe_null_ptr: *mut ValueBox<ArrayBox<T>>) -> usize {
-        _maybe_null_ptr.with_not_null_return(0, |array| array.length)
+    fn boxer_array_get_length(array_box: *mut ValueBox<ArrayBox<T>>) -> usize {
+        array_box.with_ref_ok(|array| array.length).or_log(0)
     }
 
-    fn boxer_array_get_capacity(_maybe_null_ptr: *mut ValueBox<ArrayBox<T>>) -> usize {
-        _maybe_null_ptr.with_not_null_return(0, |array| array.capacity)
+    fn boxer_array_get_capacity(array_box: *mut ValueBox<ArrayBox<T>>) -> usize {
+        array_box.with_ref_ok(|array| array.capacity).or_log(0)
     }
 
-    fn boxer_array_get_data(_maybe_null_ptr: *mut ValueBox<ArrayBox<T>>) -> *mut T {
-        _maybe_null_ptr.with_not_null_return(std::ptr::null_mut(), |array| array.data)
+    fn boxer_array_get_data(array_box: *mut ValueBox<ArrayBox<T>>) -> *mut T {
+        array_box
+            .with_ref_ok(|array| array.data)
+            .or_log(std::ptr::null_mut())
     }
 
-    fn boxer_array_at_put(_maybe_null_ptr: *mut ValueBox<ArrayBox<T>>, index: usize, item: T)
+    fn boxer_array_at_put(array_box: *mut ValueBox<ArrayBox<T>>, index: usize, item: T)
     where
         T: Clone,
     {
-        _maybe_null_ptr.with_not_null(|array| array.at_put(index, item));
+        array_box
+            .with_mut_ok(|array| array.at_put(index, item))
+            .log();
     }
 
-    fn boxer_array_at(_maybe_null_ptr: *mut ValueBox<ArrayBox<T>>, index: usize, default: T) -> T
+    fn boxer_array_at(array_box: *mut ValueBox<ArrayBox<T>>, index: usize, default: T) -> T
     where
         T: Clone,
     {
-        _maybe_null_ptr.with_not_null_return(default, |array| array.at(index))
+        array_box
+            .with_ref_ok(|array| array.at(index))
+            .or_log(default)
     }
 }

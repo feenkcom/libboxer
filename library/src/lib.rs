@@ -1,6 +1,14 @@
 #![allow(non_snake_case)]
 extern crate crossbeam;
 
+#[macro_use]
+extern crate value_box;
+#[cfg(feature = "phlow")]
+#[macro_use]
+extern crate phlow_core as phlow;
+#[cfg(feature = "phlow")]
+extern crate phlow_extensions;
+
 pub mod array;
 pub mod array_f32;
 pub mod array_int;
@@ -27,6 +35,11 @@ pub mod size_u64;
 pub mod string;
 
 #[no_mangle]
-pub extern fn boxer_test() -> bool {
+pub extern "C" fn boxer_test() -> bool {
     return true;
 }
+
+#[cfg(feature = "phlow")]
+use phlow_extensions::CoreExtensions;
+#[cfg(feature = "phlow")]
+import_extensions!(CoreExtensions);

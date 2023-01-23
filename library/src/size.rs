@@ -1,9 +1,10 @@
 use geometry_box::SizeBox;
+use std::any::Any;
 use value_box::{ValueBox, ValueBoxPointer};
 
 pub trait SizeBoxFFI<T>
 where
-    T: From<u8> + Default + Copy,
+    T: From<u8> + Default + Copy + Any,
 {
     fn boxer_size_create() -> *mut ValueBox<SizeBox<T>>;
 
@@ -20,7 +21,7 @@ where
 
 impl<T> SizeBoxFFI<T> for SizeBox<T>
 where
-    T: From<u8> + Default + Copy,
+    T: From<u8> + Default + Copy + Any,
 {
     fn boxer_size_create() -> *mut ValueBox<SizeBox<T>> {
         ValueBox::new(SizeBox::<T>::default()).into_raw()

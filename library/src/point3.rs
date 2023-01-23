@@ -1,9 +1,10 @@
 use geometry_box::Point3Box;
+use std::any::Any;
 use value_box::{ValueBox, ValueBoxPointer};
 
 pub trait Point3BoxFFI<T>
 where
-    T: From<u8> + Default + Copy,
+    T: From<u8> + Default + Copy + Any,
 {
     fn boxer_point_default() -> *mut ValueBox<Point3Box<T>>;
 
@@ -26,7 +27,7 @@ where
 
 impl<T> Point3BoxFFI<T> for Point3Box<T>
 where
-    T: From<u8> + Default + Copy,
+    T: From<u8> + Default + Copy + Any,
 {
     fn boxer_point_default() -> *mut ValueBox<Point3Box<T>> {
         ValueBox::new(Point3Box::<T>::default()).into_raw()

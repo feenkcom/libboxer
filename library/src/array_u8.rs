@@ -6,22 +6,25 @@ use crate::array::ArrayBoxFFI;
 pub type BoxerArrayU8 = ArrayBox<u8>;
 
 #[no_mangle]
-pub extern fn boxer_array_u8_byte_size(count: usize) -> usize {
+pub extern "C" fn boxer_array_u8_byte_size(count: usize) -> usize {
     BoxerArrayU8::boxer_array_byte_size(count)
 }
 
 #[no_mangle]
-pub extern fn boxer_array_u8_create() -> *mut ValueBox<BoxerArrayU8> {
+pub extern "C" fn boxer_array_u8_create() -> *mut ValueBox<BoxerArrayU8> {
     BoxerArrayU8::boxer_array_create()
 }
 
 #[no_mangle]
-pub extern fn boxer_array_u8_create_with(element: u8, amount: usize) -> *mut ValueBox<BoxerArrayU8> {
+pub extern "C" fn boxer_array_u8_create_with(
+    element: u8,
+    amount: usize,
+) -> *mut ValueBox<BoxerArrayU8> {
     BoxerArrayU8::boxer_array_create_with(element, amount)
 }
 
 #[no_mangle]
-pub extern fn boxer_array_u8_create_from_data(
+pub extern "C" fn boxer_array_u8_create_from_data(
     _data: *mut u8,
     amount: usize,
 ) -> *mut ValueBox<BoxerArrayU8> {
@@ -29,7 +32,7 @@ pub extern fn boxer_array_u8_create_from_data(
 }
 
 #[no_mangle]
-pub extern fn boxer_array_u8_copy_into(
+pub extern "C" fn boxer_array_u8_copy_into(
     _ptr_src: *mut ValueBox<BoxerArrayU8>,
     _ptr_dst: *mut ValueBox<BoxerArrayU8>,
 ) {
@@ -37,7 +40,7 @@ pub extern fn boxer_array_u8_copy_into(
 }
 
 #[no_mangle]
-pub extern fn boxer_array_u8_copy_into_data(
+pub extern "C" fn boxer_array_u8_copy_into_data(
     _ptr_src: *mut ValueBox<BoxerArrayU8>,
     _data: *mut u8,
     amount: usize,
@@ -46,27 +49,27 @@ pub extern fn boxer_array_u8_copy_into_data(
 }
 
 #[no_mangle]
-pub extern fn boxer_array_u8_get_length(ptr: *mut ValueBox<BoxerArrayU8>) -> usize {
+pub extern "C" fn boxer_array_u8_get_length(ptr: *mut ValueBox<BoxerArrayU8>) -> usize {
     BoxerArrayU8::boxer_array_get_length(ptr)
 }
 
 #[no_mangle]
-pub extern fn boxer_array_u8_get_capacity(ptr: *mut ValueBox<BoxerArrayU8>) -> usize {
+pub extern "C" fn boxer_array_u8_get_capacity(ptr: *mut ValueBox<BoxerArrayU8>) -> usize {
     BoxerArrayU8::boxer_array_get_capacity(ptr)
 }
 
 #[no_mangle]
-pub extern fn boxer_array_u8_get_data(ptr: *mut ValueBox<BoxerArrayU8>) -> *mut u8 {
+pub extern "C" fn boxer_array_u8_get_data(ptr: *mut ValueBox<BoxerArrayU8>) -> *mut u8 {
     BoxerArrayU8::boxer_array_get_data(ptr)
 }
 
 #[no_mangle]
-pub extern fn boxer_array_u8_at_put(ptr: *mut ValueBox<BoxerArrayU8>, index: usize, item: u8) {
+pub extern "C" fn boxer_array_u8_at_put(ptr: *mut ValueBox<BoxerArrayU8>, index: usize, item: u8) {
     BoxerArrayU8::boxer_array_at_put(ptr, index, item);
 }
 
 #[no_mangle]
-pub extern fn boxer_array_u8_at(ptr: *mut ValueBox<BoxerArrayU8>, index: usize) -> u8 {
+pub extern "C" fn boxer_array_u8_at(ptr: *mut ValueBox<BoxerArrayU8>, index: usize) -> u8 {
     BoxerArrayU8::boxer_array_at(ptr, index, 0)
 }
 
@@ -125,7 +128,7 @@ fn rgba_to_argb(rgba: u32) -> u32 {
 
 /// In-place convert argb to rgba
 #[no_mangle]
-pub extern fn boxer_array_u8_argb_to_rgba(ptr: *mut ValueBox<BoxerArrayU8>) {
+pub extern "C" fn boxer_array_u8_argb_to_rgba(ptr: *mut ValueBox<BoxerArrayU8>) {
     ptr.with_not_null(|array| {
         boxer_array_u8_convert_color_format(array.to_slice(), argb_to_rgba);
     })
@@ -133,7 +136,7 @@ pub extern fn boxer_array_u8_argb_to_rgba(ptr: *mut ValueBox<BoxerArrayU8>) {
 
 /// In-place convert bgra to argb
 #[no_mangle]
-pub extern fn boxer_array_u8_bgra_to_argb(ptr: *mut ValueBox<BoxerArrayU8>) {
+pub extern "C" fn boxer_array_u8_bgra_to_argb(ptr: *mut ValueBox<BoxerArrayU8>) {
     ptr.with_not_null(|array| {
         boxer_array_u8_convert_color_format(array.to_slice(), bgra_to_argb);
     })
@@ -141,14 +144,14 @@ pub extern fn boxer_array_u8_bgra_to_argb(ptr: *mut ValueBox<BoxerArrayU8>) {
 
 /// In-place convert rgba to argb
 #[no_mangle]
-pub extern fn boxer_array_u8_rgba_to_argb(ptr: *mut ValueBox<BoxerArrayU8>) {
+pub extern "C" fn boxer_array_u8_rgba_to_argb(ptr: *mut ValueBox<BoxerArrayU8>) {
     ptr.with_not_null(|array| {
         boxer_array_u8_convert_color_format(array.to_slice(), rgba_to_argb);
     })
 }
 
 #[no_mangle]
-pub extern fn boxer_array_u8_drop(ptr: *mut ValueBox<BoxerArrayU8>) {
+pub extern "C" fn boxer_array_u8_drop(ptr: *mut ValueBox<BoxerArrayU8>) {
     BoxerArrayU8::boxer_array_drop(ptr);
 }
 
